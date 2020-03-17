@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MyMaster1.Master.cs" Inherits="DemoWeb.MyMaster1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <link href="Styles/MyStyle.css" rel="stylesheet" />
+    <a href="packages.config">packages.config</a>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <a href="WebForm1.aspx.designer.cs">WebForm1.aspx.designer.cs</a>
+    <style type="text/css">
+        .auto-style1 {
+            position: fixed;
+            left: 281px;
+            top: 110px;
+            width: 1259px;
+            height: 368px;
+            margin-bottom: 0px;
+        }
+        .auto-style2 {
+            position: fixed;
+            left: -2px;
+            top: -8px;
+            width: 1576px;
+            height: 86px;
+        }
+        .auto-style3 {
+            position: fixed;
+            left: 13px;
+            top: 116px;
+            width: 209px;
+            height: 377px;
+            margin-right: 107px;
+        }
+        .auto-style4 {
+            position: absolute;
+            height: 155%;
+            width: 100%;
+            left: -12px;
+            top: -23px;
+            margin-bottom: 0px;
+        }
+        </style>
+
+</head>
+<body style="height: 63px" >
+   <div  class="auto-style2">
+       <img src="Images/img1.jpg" class="auto-style4"/>
+   </div>
+    <div  class="auto-style3">
+
+       <ul>
+  <li><a class="active" href="#Home">Home</a></li>
+  <li><a href="AddEmp.aspx">Add Employee</a></li>
+  <li><a href="Update.aspx">Update Employee Details</a></li>
+  <li><a href="DeleteEmp.aspx">Delete Employee</a></li>
+</ul>
+    </div>
+    <div  class="auto-style1">
+    <form id="form1" runat="server">
+        <div>
+            <asp:Label ID="Label1" Style="color:red;" runat="server" Text="Label"></asp:Label>
+             
+            
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                
+              
+                
+            </asp:ContentPlaceHolder>
+             
+        </div>
+        <div>
+            <asp:Button ID="Button1" runat="server" Text="LogOut" OnClick="Button1_Click" />
+        </div>
+    </form>
+        </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DEPTDATA">
+          <Key>
+            <PropertyRef Name="DEPTNO" />
+          </Key>
+          <Property Name="DEPTNO" Type="int" Nullable="false" />
+          <Property Name="DNAME" Type="nvarchar" MaxLength="14" />
+          <Property Name="LOC" Type="nvarchar" MaxLength="13" />
+        </EntityType>
+        <EntityType Name="EMPDATA">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="int" Nullable="false" />
+          <Property Name="ENAME" Type="nvarchar" MaxLength="10" />
+          <Property Name="JOB" Type="nvarchar" MaxLength="9" />
+          <Property Name="MGR" Type="int" />
+          <Property Name="HIREDATE" Type="date" />
+          <Property Name="SAL" Type="int" />
+          <Property Name="COMM" Type="int" />
+          <Property Name="DEPTNO" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Demo.dbo.order_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="order_info">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="orderdesc" Type="nvarchar" MaxLength="30" />
+          <Property Name="totalcost" Type="int" />
+          <Property Name="discountamt" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Demo.dbo.Total' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Total">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Totalcost" Type="int" />
+        </EntityType>
+        <Association Name="FK__EMPDept">
+          <End Role="DEPTDATA" Type="Self.DEPTDATA" Multiplicity="0..1" />
+          <End Role="EMPDATA" Type="Self.EMPDATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPTDATA">
+              <PropertyRef Name="DEPTNO" />
+            </Principal>
+            <Dependent Role="EMPDATA">
+              <PropertyRef Name="DEPTNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_insertempdata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eno" Type="int" Mode="In" />
+          <Parameter Name="ename" Type="nvarchar" Mode="In" />
+          <Parameter Name="job" Type="nvarchar" Mode="In" />
+          <Parameter Name="mgr" Type="int" Mode="In" />
+          <Parameter Name="hireddate" Type="datetime" Mode="In" />
+          <Parameter Name="sal" Type="int" Mode="In" />
+          <Parameter Name="comm" Type="int" Mode="In" />
+          <Parameter Name="deptno" Type="int" Mode="In" />
+          <Parameter Name="result" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="DemoModelStoreContainer">
+          <EntitySet Name="DEPTDATA" EntityType="Self.DEPTDATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPDATA" EntityType="Self.EMPDATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_info" EntityType="Self.order_info" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [order_info].[orderid] AS [orderid], 
+    [order_info].[orderdesc] AS [orderdesc], 
+    [order_info].[totalcost] AS [totalcost], 
+    [order_info].[discountamt] AS [discountamt]
+    FROM [dbo].[order_info] AS [order_info]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Total" EntityType="Self.Total" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Total].[orderid] AS [orderid], 
+    [Total].[Totalcost] AS [Totalcost]
+    FROM [dbo].[Total] AS [Total]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__EMPDept" Association="Self.FK__EMPDept">
+            <End Role="DEPTDATA" EntitySet="DEPTDATA" />
+            <End Role="EMPDATA" EntitySet="EMPDATA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EMPDATA">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="Int32" Nullable="false" />
+          <Property Name="ENAME" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="JOB" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="MGR" Type="Int32" />
+          <Property Name="HIREDATE" Type="DateTime" Precision="0" />
+          <Property Name="SAL" Type="Int32" />
+          <Property Name="COMM" Type="Int32" />
+          <Property Name="DEPTNO" Type="Int32" />
+          <NavigationProperty Name="DEPTDATA" Relationship="DemoModel.FK__EMPDept" FromRole="EMPDATA" ToRole="DEPTDATA" />
+        </EntityType>
+        <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMPDATAs" EntityType="Self.EMPDATA" />
+          <EntitySet Name="DEPTDATAs" EntityType="DemoModel.DEPTDATA" />
+          <AssociationSet Name="FK__EMPDept" Association="DemoModel.FK__EMPDept">
+            <End Role="DEPTDATA" EntitySet="DEPTDATAs" />
+            <End Role="EMPDATA" EntitySet="EMPDATAs" />
+          </AssociationSet>
+          <FunctionImport Name="sp_insertempdata">
+            <Parameter Name="eno" Mode="In" Type="Int32" />
+            <Parameter Name="ename" Mode="In" Type="String" />
+            <Parameter Name="job" Mode="In" Type="String" />
+            <Parameter Name="mgr" Mode="In" Type="Int32" />
+            <Parameter Name="hireddate" Mode="In" Type="DateTime" />
+            <Parameter Name="sal" Mode="In" Type="Int32" />
+            <Parameter Name="comm" Mode="In" Type="Int32" />
+            <Parameter Name="deptno" Mode="In" Type="Int32" />
+            <Parameter Name="result" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Totals" EntityType="DemoModel.Total" />
+          <EntitySet Name="order_info" EntityType="DemoModel.order_info" />
+        </EntityContainer>
+        <EntityType Name="DEPTDATA">
+          <Key>
+            <PropertyRef Name="DEPTNO" />
+          </Key>
+          <Property Name="DEPTNO" Type="Int32" Nullable="false" />
+          <Property Name="DNAME" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="LOC" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EMPDATAs" Relationship="DemoModel.FK__EMPDept" FromRole="DEPTDATA" ToRole="EMPDATA" />
+        </EntityType>
+        <Association Name="FK__EMPDept">
+          <End Type="DemoModel.DEPTDATA" Role="DEPTDATA" Multiplicity="0..1" />
+          <End Type="DemoModel.EMPDATA" Role="EMPDATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPTDATA">
+              <PropertyRef Name="DEPTNO" />
+            </Principal>
+            <Dependent Role="EMPDATA">
+              <PropertyRef Name="DEPTNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Total">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Totalcost" Type="Int32" />
+        </EntityType>
+        <EntityType Name="order_info">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="orderdesc" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="totalcost" Type="Int32" />
+          <Property Name="discountamt" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DemoModelStoreContainer" CdmEntityContainer="DemoEntities">
+          <EntitySetMapping Name="EMPDATAs">
+            <EntityTypeMapping TypeName="DemoModel.EMPDATA">
+              <MappingFragment StoreEntitySet="EMPDATA">
+                <ScalarProperty Name="EMPNO" ColumnName="EMPNO" />
+                <ScalarProperty Name="ENAME" ColumnName="ENAME" />
+                <ScalarProperty Name="JOB" ColumnName="JOB" />
+                <ScalarProperty Name="MGR" ColumnName="MGR" />
+                <ScalarProperty Name="HIREDATE" ColumnName="HIREDATE" />
+                <ScalarProperty Name="SAL" ColumnName="SAL" />
+                <ScalarProperty Name="COMM" ColumnName="COMM" />
+                <ScalarProperty Name="DEPTNO" ColumnName="DEPTNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPTDATAs">
+            <EntityTypeMapping TypeName="DemoModel.DEPTDATA">
+              <MappingFragment StoreEntitySet="DEPTDATA">
+                <ScalarProperty Name="LOC" ColumnName="LOC" />
+                <ScalarProperty Name="DNAME" ColumnName="DNAME" />
+                <ScalarProperty Name="DEPTNO" ColumnName="DEPTNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_insertempdata" FunctionName="DemoModel.Store.sp_insertempdata" />
+          <EntitySetMapping Name="Totals">
+            <EntityTypeMapping TypeName="DemoModel.Total">
+              <MappingFragment StoreEntitySet="Total">
+                <ScalarProperty Name="Totalcost" ColumnName="Totalcost" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_info">
+            <EntityTypeMapping TypeName="DemoModel.order_info">
+              <MappingFragment StoreEntitySet="order_info">
+                <ScalarProperty Name="discountamt" ColumnName="discountamt" />
+                <ScalarProperty Name="totalcost" ColumnName="totalcost" />
+                <ScalarProperty Name="orderdesc" ColumnName="orderdesc" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
